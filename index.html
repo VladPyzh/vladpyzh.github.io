@@ -41,7 +41,7 @@
       .container {
         max-width: 1100px;
         margin: 0 auto;
-        padding: 3rem 1.5rem 4rem;
+        padding: 3rem 0 4rem;
       }
 
       header {
@@ -87,30 +87,28 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        background: #0f111a;
-        padding: 0.75rem;
-        min-height: 220px;
+        padding: 0;
+        min-height: 0;
       }
 
       .item-media img {
         display: block;
         width: 100%;
         height: auto;
-        max-height: 100%;
+        max-height: 320px;
         object-fit: contain;
         object-position: center;
       }
 
       .gallery {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 0.75rem;
-        padding: 0.75rem;
       }
 
       .gallery img {
-        flex: 1 1 50%;
+        width: 100%;
         height: auto;
-        max-height: 100%;
       }
 
       .item-body {
