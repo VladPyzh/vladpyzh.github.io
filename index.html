@@ -40,7 +40,7 @@
 
       .container {
         max-width: 1100px;
-        margin: 0 auto 0 clamp(0.5rem, 3vw, 2.5rem);
+        margin: 0 auto;
         padding: 3rem 0 4rem;
       }
 
@@ -85,7 +85,7 @@
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         overflow: hidden;
         padding: 0;
         min-height: 0;
@@ -93,11 +93,18 @@
 
       .item-media img {
         display: block;
-        width: 100%;
+        width: auto;
+        max-width: 100%;
         height: auto;
         max-height: 320px;
         object-fit: contain;
         object-position: center;
+        cursor: zoom-in;
+        transition: transform 0.2s ease;
+      }
+
+      .item-media img:active {
+        transform: scale(0.98);
       }
 
       .gallery {
@@ -109,6 +116,12 @@
       .gallery img {
         width: 100%;
         height: auto;
+        object-fit: contain;
+      }
+
+      .media-trigger:focus-visible {
+        outline: 3px solid rgba(54, 90, 212, 0.5);
+        outline-offset: 4px;
       }
 
       .item-body {
@@ -171,9 +184,61 @@
         color: inherit;
       }
 
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(15, 17, 26, 0.85);
+        backdrop-filter: blur(6px);
+        z-index: 1000;
+        padding: clamp(1.5rem, 5vw, 3rem);
+      }
+
+      .lightbox[hidden] {
+        display: none;
+      }
+
+      .lightbox img {
+        max-width: min(90vw, 1100px);
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: clamp(0.75rem, 3vw, 1.5rem);
+        right: clamp(0.75rem, 3vw, 1.5rem);
+        border: none;
+        background: rgba(18, 22, 34, 0.6);
+        color: #ffffff;
+        font-size: 2rem;
+        line-height: 1;
+        border-radius: 50%;
+        width: 2.75rem;
+        height: 2.75rem;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+
+      .lightbox-close:hover {
+        background: rgba(18, 22, 34, 0.85);
+        transform: scale(1.05);
+      }
+
+      .lightbox-close:focus-visible {
+        outline: 3px solid rgba(255, 255, 255, 0.3);
+        outline-offset: 2px;
+      }
+
       @media (max-width: 640px) {
         .container {
-          margin-left: 0;
           padding: 2.5rem 1rem 3rem;
         }
 
@@ -207,6 +272,7 @@
         <article class="item-card">
           <figure class="item-media">
             <img
+              class="media-trigger"
               src="images/monitor.jpg"
               alt="Lenovo L28u-35 28 inch 4K monitor on a desk"
               loading="lazy"
@@ -236,6 +302,7 @@
         <article class="item-card">
           <figure class="item-media">
             <img
+              class="media-trigger"
               src="images/chair.jpg"
               alt="Black IKEA HUVUDSPELARE gaming chair"
               loading="lazy"
@@ -265,6 +332,7 @@
         <article class="item-card">
           <figure class="item-media">
             <img
+              class="media-trigger"
               src="images/coffee_maker.jpg"
               alt="Moulinex filter coffee maker on a kitchen counter"
               loading="lazy"
@@ -294,6 +362,7 @@
         <article class="item-card">
           <figure class="item-media">
             <img
+              class="media-trigger"
               src="images/lamp.jpg"
               alt="Black and white IKEA TAGARP floor lamp"
               loading="lazy"
@@ -322,6 +391,7 @@
         <article class="item-card">
           <figure class="item-media">
             <img
+              class="media-trigger"
               src="images/books.jpg"
               alt="Stack of assorted books including novels and non-fiction titles"
               loading="lazy"
@@ -352,6 +422,7 @@
         <article class="item-card">
           <figure class="item-media">
             <img
+              class="media-trigger"
               src="images/handle.jpg"
               alt="IKEA EKRAR white floor coat hanger"
               loading="lazy"
@@ -380,11 +451,13 @@
         <article class="item-card">
           <figure class="item-media gallery">
             <img
+              class="media-trigger"
               src="images/wardbrobe_closed.jpg"
               alt="IKEA VUKU wardrobe exterior with closed doors"
               loading="lazy"
             />
             <img
+              class="media-trigger"
               src="images/wardbrobe_open.jpg"
               alt="IKEA VUKU wardrobe interior with open doors"
               loading="lazy"
@@ -412,11 +485,77 @@
         </article>
       </section>
 
+      <div class="lightbox" id="lightbox" hidden>
+        <button type="button" class="lightbox-close" aria-label="Close image">
+          &times;
+        </button>
+        <img src="" alt="" id="lightbox-image" />
+      </div>
+
       <footer>
         Interested? Message me on Telegram <strong>@vladpyzh</strong> or email
         <a href="mailto:vlad.pyzh@gmail.com">vlad.pyzh@gmail.com</a> to arrange a
         pickup.
       </footer>
     </div>
+    <script>
+      (() => {
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImage = document.getElementById("lightbox-image");
+        const closeButton = lightbox.querySelector(".lightbox-close");
+        let activeTrigger = null;
+
+        const openLightbox = (img) => {
+          lightboxImage.src = img.src;
+          lightboxImage.alt = img.alt || "";
+          lightbox.removeAttribute("hidden");
+          document.body.style.overflow = "hidden";
+          activeTrigger = img;
+          img.setAttribute("aria-expanded", "true");
+          closeButton.focus({ preventScroll: true });
+        };
+
+        const closeLightbox = () => {
+          lightbox.setAttribute("hidden", "");
+          lightboxImage.src = "";
+          document.body.style.overflow = "";
+          if (activeTrigger) {
+            activeTrigger.setAttribute("aria-expanded", "false");
+            activeTrigger.focus({ preventScroll: true });
+            activeTrigger = null;
+          }
+        };
+
+        document.querySelectorAll(".media-trigger").forEach((img) => {
+          img.addEventListener("click", () => openLightbox(img));
+          img.addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+              openLightbox(img);
+            }
+          });
+          img.setAttribute("tabindex", "0");
+          img.setAttribute("role", "button");
+          img.setAttribute("aria-haspopup", "dialog");
+          img.setAttribute("aria-expanded", "false");
+          if (!img.getAttribute("aria-label")) {
+            const baseLabel = img.alt ? `View larger version of ${img.alt}` : "View larger image";
+            img.setAttribute("aria-label", baseLabel);
+          }
+        });
+
+        closeButton.addEventListener("click", closeLightbox);
+        lightbox.addEventListener("click", (event) => {
+          if (event.target === lightbox) {
+            closeLightbox();
+          }
+        });
+
+        window.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && !lightbox.hasAttribute("hidden")) {
+            closeLightbox();
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
