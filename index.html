@@ -87,6 +87,10 @@
         background: #0f111a;
       }
 
+      .item-media:not(.gallery) {
+        aspect-ratio: 4 / 3;
+      }
+
       .item-media img {
         display: block;
         width: 100%;
@@ -98,6 +102,11 @@
       .gallery {
         display: grid;
         grid-template-columns: 1fr 1fr;
+        aspect-ratio: 3 / 2;
+      }
+
+      .gallery img {
+        height: 100%;
       }
 
       .item-body {
@@ -158,6 +167,24 @@
 
       footer a {
         color: inherit;
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding: 2.5rem 1rem 3rem;
+        }
+
+        header h1 {
+          font-size: 2rem;
+        }
+
+        header p {
+          font-size: 0.95rem;
+        }
+
+        .item-body {
+          padding: 1.25rem;
+        }
       }
     </style>
   </head>
